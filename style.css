@@ -1,0 +1,337 @@
+/* ============================================
+   Gedichte deuten – Lernwebsite
+   Nur Systemschriften: keine externen Dienste (DSGVO-freundlich)
+   ============================================ */
+
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --surface-2: #efebe3;
+  --text: #22201c;
+  --muted: #5d584f;
+  --border: #d9d3c7;
+  --accent: #7a2e2e;        /* Weinrot */
+  --accent-soft: #f3e4e1;
+  --accent-2: #2f4f6f;      /* Tintenblau */
+  --accent-2-soft: #e3ebf3;
+  --ok: #2e6b3a;
+  --ok-soft: #e2f0e4;
+  --no: #9a2b1f;
+  --no-soft: #f8e1dd;
+  --mark-yellow: #fbe68a;
+  --mark-blue: #bcd9f5;
+  --mark-green: #c6e8c2;
+  --mark-red: #f6c2bb;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.04);
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-text: Georgia, "Times New Roman", "Liberation Serif", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1a18;
+    --surface: #252320;
+    --surface-2: #2f2c28;
+    --text: #ece8e1;
+    --muted: #b3ac9f;
+    --border: #45413a;
+    --accent: #e09a8f;
+    --accent-soft: #3a2724;
+    --accent-2: #9cc0e3;
+    --accent-2-soft: #233140;
+    --ok: #8fd19b;
+    --ok-soft: #22362a;
+    --no: #f0a195;
+    --no-soft: #3d2420;
+    --mark-yellow: #6b5a12;
+    --mark-blue: #24496d;
+    --mark-green: #2c5a2a;
+    --mark-red: #6d2e27;
+    --shadow: none;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+img { max-width: 100%; }
+
+a { color: var(--accent-2); }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute; left: -999px; top: 0;
+  background: var(--accent); color: #fff; padding: .5rem 1rem; z-index: 100;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* ---------- Kopfzeile & Navigation ---------- */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.header-inner {
+  max-width: 1100px; margin: 0 auto; padding: .6rem 16px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem;
+}
+.brand {
+  font-family: var(--font-text);
+  font-weight: 700; font-size: 1.2rem;
+  color: var(--accent); text-decoration: none;
+}
+.nav-toggle {
+  display: none; margin-left: auto;
+  background: none; border: 1px solid var(--border); border-radius: 8px;
+  padding: .35rem .7rem; font: inherit; color: var(--text); cursor: pointer;
+}
+.site-nav ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: .25rem;
+}
+.site-nav a {
+  display: block; padding: .35rem .65rem; border-radius: 6px;
+  text-decoration: none; color: var(--muted); font-size: .95rem;
+}
+.site-nav a:hover { background: var(--surface-2); color: var(--text); }
+.site-nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+@media (max-width: 760px) {
+  .nav-toggle { display: inline-block; }
+  .site-nav { width: 100%; display: none; }
+  .site-nav.open { display: block; }
+  .site-nav ul { flex-direction: column; padding-bottom: .5rem; }
+}
+
+/* ---------- Layout ---------- */
+main { max-width: 860px; margin: 0 auto; padding: 1.5rem 16px 4rem; }
+main.wide { max-width: 1100px; }
+
+h1, h2, h3 { font-family: var(--font-text); line-height: 1.25; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin: .5rem 0 .5rem; }
+h2 { font-size: 1.55rem; margin-top: 2.5rem; padding-top: .5rem; border-top: 1px solid var(--border); }
+h3 { font-size: 1.2rem; margin: 0 0 .5rem; }
+
+.lead { font-size: 1.15rem; color: var(--muted); max-width: 60ch; }
+.eyebrow {
+  text-transform: uppercase; letter-spacing: .08em; font-size: .8rem;
+  color: var(--accent); font-weight: 700; margin: 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--shadow);
+  margin: 1rem 0;
+}
+.card > :first-child { margin-top: 0; }
+.card > :last-child { margin-bottom: 0; }
+
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid .card { margin: 0; }
+
+.info {
+  background: var(--accent-2-soft);
+  border-left: 4px solid var(--accent-2);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: .9rem 1.1rem; margin: 1rem 0;
+}
+.info > :first-child { margin-top: 0; }
+.info > :last-child { margin-bottom: 0; }
+
+.method {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: .9rem 1.1rem; margin: 1rem 0;
+}
+.method > :first-child { margin-top: 0; }
+.method > :last-child { margin-bottom: 0; }
+
+/* ---------- Tabellen ---------- */
+.table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--border); border-radius: var(--radius); }
+table { border-collapse: collapse; width: 100%; background: var(--surface); font-size: .97rem; }
+th, td { text-align: left; vertical-align: top; padding: .6rem .75rem; border-bottom: 1px solid var(--border); }
+th { background: var(--surface-2); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+
+/* ---------- Aufgaben ---------- */
+.task {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem; margin: 1.25rem 0;
+  box-shadow: var(--shadow);
+}
+.task.expert { border-left-color: var(--accent-2); }
+.task.creative { border-left-color: #b07a1e; }
+.task-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; align-items: baseline; }
+.task-head h3 { margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+.tag {
+  font-size: .78rem; font-weight: 600; padding: .15rem .55rem;
+  border-radius: 99px; background: var(--surface-2); color: var(--muted); white-space: nowrap;
+}
+.tag.sf { background: var(--accent-2-soft); color: var(--accent-2); }
+.tag.level-basis { background: var(--ok-soft); color: var(--ok); }
+.tag.level-experte { background: var(--accent-soft); color: var(--accent); }
+.tag.kreativ { background: #f6ead2; color: #7a5410; }
+@media (prefers-color-scheme: dark) { .tag.kreativ { background: #3a2f1a; color: #e6c27a; } }
+
+.task ol, .task ul { padding-left: 1.3rem; }
+.task li { margin: .25rem 0; }
+
+details {
+  background: var(--surface-2); border-radius: 8px;
+  padding: .5rem .85rem; margin: .6rem 0;
+}
+details summary { cursor: pointer; font-weight: 600; color: var(--accent-2); }
+details[open] summary { margin-bottom: .4rem; }
+
+/* ---------- Gedichte ---------- */
+.poem-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.25rem 1rem;
+  margin: 1.25rem 0;
+  box-shadow: var(--shadow);
+}
+.poem-title { font-family: var(--font-text); font-size: 1.35rem; margin: 0; }
+.poem-meta { color: var(--muted); margin: .15rem 0 1rem; font-size: .95rem; }
+.poem { font-family: var(--font-text); font-size: 1.1rem; line-height: 1.75; counter-reset: vers; }
+.stanza { margin-bottom: 1rem; }
+.line { display: block; position: relative; padding-left: 2.6rem; }
+.line::before {
+  counter-increment: vers; content: counter(vers);
+  position: absolute; left: 0; width: 1.8rem; text-align: right;
+  color: var(--muted); font-family: var(--font-ui); font-size: .78rem; top: .35em;
+}
+.line:not(:nth-child(5n))::before { color: transparent; }
+.poem.show-all-numbers .line::before { color: var(--muted); }
+.poem-source { font-size: .82rem; color: var(--muted); margin: .5rem 0 0; }
+
+mark { border-radius: 3px; padding: 0 .1em; color: inherit; }
+mark.yellow { background: var(--mark-yellow); }
+mark.blue { background: var(--mark-blue); }
+mark.green { background: var(--mark-green); }
+mark.red { background: var(--mark-red); }
+
+.marker-tools {
+  display: flex; flex-wrap: wrap; gap: .4rem; align-items: center;
+  padding: .6rem 0 .9rem; border-bottom: 1px dashed var(--border); margin-bottom: 1rem;
+}
+.marker-tools span { font-size: .85rem; color: var(--muted); margin-right: .25rem; }
+
+/* ---------- Buttons ---------- */
+button, .btn {
+  font: inherit; font-size: .95rem;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); border-radius: 8px; padding: .4rem .85rem;
+  cursor: pointer; text-decoration: none; display: inline-block;
+}
+button:hover, .btn:hover { background: var(--surface-2); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent); filter: brightness(1.1); }
+@media (prefers-color-scheme: dark) { .btn-primary { color: #1b1a18; } }
+.swatch { display: inline-flex; align-items: center; gap: .35rem; }
+.swatch i { width: .9rem; height: .9rem; border-radius: 3px; display: inline-block; }
+
+/* ---------- Quiz ---------- */
+.quiz .q { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; margin: .8rem 0; }
+.quiz .q > p:first-child { font-weight: 600; margin-top: 0; }
+.quiz .opts { display: flex; flex-direction: column; gap: .4rem; }
+.quiz .opt { text-align: left; }
+.quiz .opt.correct { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); font-weight: 600; }
+.quiz .opt.wrong { background: var(--no-soft); border-color: var(--no); color: var(--no); }
+.feedback { margin: .6rem 0 0; font-size: .95rem; min-height: 1em; }
+.feedback.ok { color: var(--ok); }
+.feedback.no { color: var(--no); }
+
+/* ---------- Zuordnung ---------- */
+.match { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; margin: 1rem 0; }
+.match-row {
+  display: grid; grid-template-columns: 1fr minmax(160px, 220px); gap: .6rem;
+  align-items: center; padding: .45rem 0; border-bottom: 1px solid var(--border);
+}
+.match-row:last-of-type { border-bottom: 0; }
+.match-row .quote { font-family: var(--font-text); }
+.match select { font: inherit; padding: .35rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text); width: 100%; }
+.match select.right { border-color: var(--ok); background: var(--ok-soft); }
+.match select.false { border-color: var(--no); background: var(--no-soft); }
+.match .actions { margin-top: .8rem; display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+@media (max-width: 560px) { .match-row { grid-template-columns: 1fr; } }
+
+/* ---------- Notizfelder ---------- */
+textarea {
+  width: 100%; min-height: 6rem; font: inherit; font-size: .97rem;
+  padding: .6rem; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); resize: vertical;
+}
+.save-hint { font-size: .8rem; color: var(--muted); }
+
+/* ---------- Selbstcheck ---------- */
+.selfcheck {
+  background: var(--ok-soft); border-radius: var(--radius);
+  padding: 1rem 1.25rem; margin: 2.5rem 0 1rem;
+}
+.selfcheck h2 { border: 0; margin-top: 0; padding-top: 0; }
+.selfcheck label { display: flex; gap: .6rem; align-items: flex-start; padding: .3rem 0; cursor: pointer; }
+.selfcheck input { margin-top: .35rem; width: 1.1rem; height: 1.1rem; accent-color: var(--ok); flex-shrink: 0; }
+
+/* ---------- Modulkarten & Fortschritt ---------- */
+.module-card { display: flex; flex-direction: column; gap: .4rem; text-decoration: none; color: var(--text); }
+.module-card:hover { border-color: var(--accent); }
+.module-card .num { color: var(--accent); font-weight: 700; font-size: .85rem; }
+.module-card h3 { margin: 0; }
+.module-card p { margin: 0; color: var(--muted); font-size: .95rem; }
+.progress { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-top: auto; }
+.progress span { display: block; height: 100%; background: var(--ok); width: 0; transition: width .3s; }
+.progress-label { font-size: .8rem; color: var(--muted); }
+
+/* ---------- Musterabschnitt mit Kommentar ---------- */
+.annotated { display: grid; grid-template-columns: 1fr 220px; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 1rem 0; }
+.annotated .txt, .annotated .note { padding: .7rem 1rem; border-bottom: 1px solid var(--border); }
+.annotated .txt { background: var(--surface); font-family: var(--font-text); }
+.annotated .note { background: var(--surface-2); font-size: .88rem; color: var(--muted); }
+.annotated .note strong { color: var(--accent); display: block; }
+@media (max-width: 640px) {
+  .annotated { grid-template-columns: 1fr; }
+  .annotated .txt { border-bottom: 0; }
+}
+
+/* ---------- Glossar ---------- */
+.glossary-search { width: 100%; font: inherit; padding: .6rem .8rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); margin: 1rem 0; }
+dl.glossary dt { font-weight: 700; font-family: var(--font-text); font-size: 1.08rem; margin-top: 1rem; }
+dl.glossary dd { margin: .2rem 0 0; padding-bottom: .8rem; border-bottom: 1px solid var(--border); }
+.cat { font-size: .75rem; color: var(--accent-2); font-family: var(--font-ui); font-weight: 600; margin-left: .4rem; }
+
+/* ---------- Seitennavigation unten & Fußzeile ---------- */
+.pager { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 3rem; }
+.site-footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .85rem; text-align: center; padding: 1.5rem 16px; }
+
+@media print {
+  .site-header, .marker-tools, .pager, .site-footer, details:not([open]) { display: none; }
+  body { background: #fff; color: #000; }
+  .task, .card, .poem-box { box-shadow: none; break-inside: avoid; }
+}
